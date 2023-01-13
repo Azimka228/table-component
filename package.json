@@ -2,6 +2,7 @@
   "name": "table-component",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Azimka228.github.io/table-component",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -23,8 +24,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "test": "react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject",
     "eslint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "eslint:fix": "eslint --fix .",
