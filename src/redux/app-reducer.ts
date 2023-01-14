@@ -2,10 +2,7 @@ import {AppThunk} from './store';
 import {productsAPI} from '../api/api';
 import {setProductsDataAC} from './products-reducer';
 
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
-
 const initialState = {
-  status: 'idle' as RequestStatusType,
   error: null as null | string,
   initialized: false,
 };
@@ -13,7 +10,6 @@ const initialState = {
 type InitialStateType = typeof initialState;
 
 export type AppReducerActionsType =
-  | ReturnType<typeof setAppStatusAC>
   | ReturnType<typeof setAppErrorAC>
   | ReturnType<typeof setInitializedValueAppAC>;
 
@@ -22,8 +18,6 @@ export const appReducer = (
   action: AppReducerActionsType,
 ): InitialStateType => {
   switch (action.type) {
-    case 'APP/SET-STATUS':
-      return {...state, status: action.status};
     case 'APP/SET-ERROR':
       return {...state, error: action.error};
     case 'APP/SET-INITIALIZED':
@@ -36,8 +30,6 @@ export const appReducer = (
 // ACTION CREATORS
 export const setAppErrorAC = (error: string | null) =>
   ({type: 'APP/SET-ERROR', error} as const);
-export const setAppStatusAC = (status: RequestStatusType) =>
-  ({type: 'APP/SET-STATUS', status} as const);
 export const setInitializedValueAppAC = (value: boolean) =>
   ({type: 'APP/SET-INITIALIZED', value} as const);
 
@@ -50,7 +42,8 @@ export const initializedAppTC = (): AppThunk => {
         dispatch(setProductsDataAC(res.data.products));
       })
       .catch(e => {
-        console.log(e);
+        const error = e.message;
+        dispatch(setAppErrorAC(error));
       })
       .finally(() => {
         dispatch(setInitializedValueAppAC(true));
