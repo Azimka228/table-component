@@ -1,16 +1,32 @@
-import React, { useEffect } from 'react'
-import './App.css'
-import { productsAPI } from './api/api'
+import React, {useEffect} from 'react';
+import s from './App.module.css';
+import {TableComponent} from './components/table-component';
+import {useAppDispatch, UseAppSelector} from './redux/store';
+import {initializedAppTC} from './redux/app-reducer';
+import {CircularProgress} from '@mui/material';
 
 function App() {
-  useEffect(()=>{
-    productsAPI.getProducts().then(res=>{
-      res.data.products.map(el => console.log(el.discountPercentage))
-    })
-  },[])
-  return <div className='App'>
-    test
-  </div>
+  const isInitialized = UseAppSelector(state => state.app.initialized);
+  const productsData = UseAppSelector(state => state.products);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(initializedAppTC());
+  }, []);
+
+  if (!isInitialized) {
+    return (
+      <div className={s.CircularProgress}>
+        <CircularProgress />
+      </div>
+    );
+  }
+
+  return (
+    <div className={s.App}>
+      <TableComponent originalRows={productsData} />
+    </div>
+  );
 }
 
-export default App
+export default App;
