@@ -2,7 +2,13 @@ import React, {FC} from 'react';
 import {ProductType} from '../../../api/api';
 import {StyledTableCell} from '../../tableStyledComponents/styled-table-cell';
 import {StyledTableRow} from '../../tableStyledComponents/styled-table-row';
-import {Collapse, TableHead, TableRow, Typography} from '@mui/material';
+import {
+  Collapse,
+  TableHead,
+  TableRow,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,17 +23,29 @@ type TableBodyRowPropsType = {
 
 export const TableBodyRow: FC<TableBodyRowPropsType> = ({row}) => {
   const [open, setOpen] = React.useState(false);
+
+  const collapseButtonIcons = open ? (
+    <KeyboardArrowUpIcon />
+  ) : (
+    <KeyboardArrowDownIcon />
+  );
+  const collapseTooltipTitle = open
+    ? 'close additional information'
+    : 'open additional information';
+
   return (
     <>
       <StyledTableRow>
         <StyledTableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
+          <Tooltip title={collapseTooltipTitle}>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {collapseButtonIcons}
+            </IconButton>
+          </Tooltip>
         </StyledTableCell>
         <StyledTableCell component="th" scope="row">
           {row.title}
