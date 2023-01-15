@@ -32,7 +32,6 @@ export const TableFooterCustom: FC<TableFooterCustomPropsType> = ({
     setPage(0);
   };
 
-  console.log(page);
   return (
     <StyledTableRow>
       <TablePagination

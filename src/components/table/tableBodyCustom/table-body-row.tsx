@@ -47,19 +47,10 @@ export const TableBodyRow: FC<TableBodyRowPropsType> = ({row}) => {
             </IconButton>
           </Tooltip>
         </StyledTableCell>
-        <StyledTableCell component="th" scope="row">
-          {row.title}
-        </StyledTableCell>
-        <StyledTableCell style={{width: 160}} align="right">
-          {row.description}
-        </StyledTableCell>
-        <StyledTableCell style={{width: 160}} align="right">
-          {row.price}
-        </StyledTableCell>
-        <StyledTableCell align="right">{row.brand}</StyledTableCell>
-        <StyledTableCell style={{width: 160}} align="right">
-          {row.brand}
-        </StyledTableCell>
+        <StyledTableCell align="center">{row.title}</StyledTableCell>
+        <StyledTableCell align="center">{row.description}</StyledTableCell>
+        <StyledTableCell align="center">{row.price}</StyledTableCell>
+        <StyledTableCell align="center">{row.brand}</StyledTableCell>
       </StyledTableRow>
       <TableRow>
         <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
