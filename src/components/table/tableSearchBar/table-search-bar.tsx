@@ -20,6 +20,7 @@ export const TableSearchBar: FC<tableSearchBarType> = ({onChange}) => {
 
   const handleCloseSearching = () => {
     setSearchBarValue('');
+    onChange('');
   };
 
   const searchBarIcons =

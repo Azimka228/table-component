@@ -18,33 +18,33 @@ export type OrderType = 'asc' | 'desc' | 'none';
 
 function tableSort(
   array: Array<ProductType>,
-  sort: 'asc' | 'desc',
-  sortBy: string,
+  order: 'asc' | 'desc',
+  orderBy: string,
 ) {
   const stabilizedThis = array.map(el => ({...el}));
   let sortedArray: Array<ProductType> = [];
-  if (sort === 'asc') {
-    if (stabilizedThis.find((x: any) => typeof x[sortBy] !== 'number'))
+  if (order === 'asc') {
+    if (stabilizedThis.find((x: any) => typeof x[orderBy] !== 'number'))
       // sort by string
       sortedArray = stabilizedThis.sort((a: any, b: any) =>
-        a[sortBy].localeCompare(b[sortBy]),
+        a[orderBy].localeCompare(b[orderBy]),
       );
     // sort by number
     else
       sortedArray = stabilizedThis.sort(
-        (a: any, b: any) => a[sortBy] - b[sortBy],
+        (a: any, b: any) => a[orderBy] - b[orderBy],
       );
   }
-  if (sort === 'desc') {
-    if (stabilizedThis.find((x: any) => typeof x[sortBy] !== 'number'))
+  if (order === 'desc') {
+    if (stabilizedThis.find((x: any) => typeof x[orderBy] !== 'number'))
       // sort by string
       sortedArray = stabilizedThis.sort((a: any, b: any) =>
-        b[sortBy].localeCompare(a[sortBy]),
+        b[orderBy].localeCompare(a[orderBy]),
       );
     // sort by number
     else
       sortedArray = stabilizedThis.sort(
-        (a: any, b: any) => b[sortBy] - a[sortBy],
+        (a: any, b: any) => b[orderBy] - a[orderBy],
       );
   }
   return sortedArray;
@@ -66,7 +66,13 @@ export const TableComponent: FC<TableComponentPropsType> = ({
     const filteredRows = originalRows.filter(row => {
       return row.title.toLowerCase().includes(searchedVal.toLowerCase());
     });
-    setRows(filteredRows);
+
+    const result =
+      orderBy !== 'none' && order !== 'none'
+        ? tableSort(filteredRows, order, orderBy)
+        : filteredRows;
+
+    setRows(result);
     setPage(0);
   };
   const requestSort = (newValueOrderBy: string, newValueOrder: OrderType) => {
@@ -76,12 +82,6 @@ export const TableComponent: FC<TableComponentPropsType> = ({
       setOrder(newValueOrder);
     }
 
-    // this is for to sort the new clicked column by asc
-    if (orderBy !== newValueOrderBy && order === 'desc') {
-      setRows(tableSort(rows, 'asc', newValueOrderBy));
-    }
-
-    // this is for Disable sorting on current column
     if (newValueOrderBy === orderBy && newValueOrder === 'none') {
       setOrderBy('none');
     } else {
@@ -92,6 +92,14 @@ export const TableComponent: FC<TableComponentPropsType> = ({
       setRows(tableSort(rows, newValueOrder, newValueOrderBy));
     } else {
       setRows(originalRows);
+    }
+
+    // this is for to sort the new clicked column by asc
+    if (orderBy !== newValueOrder && order === 'desc') {
+      setRows(tableSort(rows, 'asc', newValueOrderBy));
+    }
+    if (newValueOrder === 'desc' && newValueOrderBy !== orderBy) {
+      setRows(tableSort(rows, 'asc', newValueOrderBy));
     }
   };
 

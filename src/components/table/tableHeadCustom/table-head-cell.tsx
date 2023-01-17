@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {StyledTableCell} from '../../tableStyledComponents/styled-table-cell';
 import {TableSortLabel} from '@mui/material';
 import {OrderType} from '../../table-component';
@@ -24,8 +24,6 @@ export const TableHeadCell: FC<TableHeadCellPropsType> = ({
   orderBy,
   order,
 }) => {
-
-
   const handleClick = () => {
     if (order === 'asc') {
       requestSort(ColumnValues.field, 'desc');
