@@ -5,13 +5,15 @@ import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
 import {ProductType} from '../api/api';
 import {TableHeadCustom} from './table/table-head-custom';
-import {TableFooterCustom} from './table/table-footer-custom';
-import {TableSearchBar} from './table/tableSearchBar/table-search-bar';
+import {TablePaginationCustom} from './table/tableToolbar/tablePagination/table-pagination-custom';
+import {TableSearchBar} from './table/tableToolbar/tableSearchBar/table-search-bar';
 import {TableBodyCustom} from './table/tableBodyCustom/table-body-custom';
 
 type TableComponentPropsType = {
-  originalRows: Array<ProductType>;
+  initialRows: Array<ProductType>;
   columns: Array<object>;
+  rowsPerPageOptions: Array<number>;
+  searchBy: string;
 };
 
 export type OrderType = 'asc' | 'desc' | 'none';
@@ -51,10 +53,12 @@ function tableSort(
 }
 
 export const TableComponent: FC<TableComponentPropsType> = ({
-  originalRows,
+  initialRows,
   columns,
+  rowsPerPageOptions,
+  searchBy,
 }) => {
-  const [rows, setRows] = React.useState<Array<ProductType>>(originalRows);
+  const [rows, setRows] = React.useState<Array<ProductType>>(initialRows);
 
   const [page, setPage] = React.useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
@@ -63,10 +67,14 @@ export const TableComponent: FC<TableComponentPropsType> = ({
   const [orderBy, setOrderBy] = React.useState('none');
 
   const requestSearch = (searchedVal: string) => {
-    const filteredRows = originalRows.filter(row => {
-      return row.title.toLowerCase().includes(searchedVal.toLowerCase());
+    const filteredRows = initialRows.filter((row: any) => {
+      if (typeof row[searchBy] === 'number') {
+        return String(row[searchBy]).includes(searchedVal);
+      }
+      return row[searchBy].toLowerCase().includes(searchedVal.toLowerCase());
     });
 
+    // This is to keep sorting by column. if sorting is enabled on any of the columns
     const result =
       orderBy !== 'none' && order !== 'none'
         ? tableSort(filteredRows, order, orderBy)
@@ -91,7 +99,7 @@ export const TableComponent: FC<TableComponentPropsType> = ({
     if (newValueOrder !== 'none') {
       setRows(tableSort(rows, newValueOrder, newValueOrderBy));
     } else {
-      setRows(originalRows);
+      setRows(initialRows);
     }
 
     // this is for to sort the new clicked column by asc
@@ -114,11 +122,12 @@ export const TableComponent: FC<TableComponentPropsType> = ({
           width: '100%',
         }}
       >
-        <TableFooterCustom
+        <TablePaginationCustom
           rows={rows}
           setPage={setPage}
           setRowsPerPage={setRowsPerPage}
           page={page}
+          rowsPerPageOptions={rowsPerPageOptions}
           rowsPerPage={rowsPerPage}
         />
         <TableSearchBar onChange={requestSearch} />

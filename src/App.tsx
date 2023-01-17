@@ -52,7 +52,12 @@ function App() {
   return (
     <div className={s.App}>
       <ErrorSnackbar />
-      <TableComponent originalRows={productsData} columns={columns} />
+      <TableComponent
+        initialRows={productsData}
+        columns={columns}
+        rowsPerPageOptions={[3, 7, 10]}
+        searchBy={'price'}
+      />
     </div>
   );
 }
