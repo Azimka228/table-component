@@ -1,13 +1,17 @@
 import React, {FC} from 'react';
-import {StyledTableRow} from '../tableStyledComponents/styled-table-row';
-import {StyledTableCell} from '../tableStyledComponents/styled-table-cell';
+import {StyledTableRow} from '../../tableStyledComponents/styled-table-row';
+import {StyledTableCell} from '../../tableStyledComponents/styled-table-cell';
 import {TableHead} from '@mui/material';
-import {TableHeadCell} from './tableHeadCustom/table-head-cell';
-import {OrderType} from '../table-component';
+import {ColumnValuesType, TableHeadCell} from './table-head-cell';
+import {OrderType} from '../../table-component';
+import {ProductType} from '../../../api/api';
 
 type TableHeadCustomPropsType = {
-  columns: Array<any>;
-  requestSort: (newValueOrderBy: string, newValueOrder: OrderType) => void;
+  columns: Array<ColumnValuesType>;
+  requestSort: (
+    newValueOrderBy: keyof ProductType,
+    newValueOrder: OrderType,
+  ) => void;
   orderBy: string;
   order: OrderType;
 };

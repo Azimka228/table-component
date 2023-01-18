@@ -2,10 +2,14 @@ import React, {FC} from 'react';
 import {StyledTableCell} from '../../tableStyledComponents/styled-table-cell';
 import {TableSortLabel} from '@mui/material';
 import {OrderType} from '../../table-component';
+import {ProductType} from '../../../api/api';
 
 type TableHeadCellPropsType = {
   ColumnValues: ColumnValuesType;
-  requestSort: (newValueOrderBy: string, newValueOrder: OrderType) => void;
+  requestSort: (
+    newValueOrderBy: keyof ProductType,
+    newValueOrder: OrderType,
+  ) => void;
   orderBy: string;
   order: OrderType;
 };
@@ -26,13 +30,13 @@ export const TableHeadCell: FC<TableHeadCellPropsType> = ({
 }) => {
   const handleClick = () => {
     if (order === 'asc') {
-      requestSort(ColumnValues.field, 'desc');
+      requestSort(ColumnValues.field as keyof ProductType, 'desc');
     }
     if (order === 'desc') {
-      requestSort(ColumnValues.field, 'none');
+      requestSort(ColumnValues.field as keyof ProductType, 'none');
     }
     if (order === 'none') {
-      requestSort(ColumnValues.field, 'asc');
+      requestSort(ColumnValues.field as keyof ProductType, 'asc');
     }
   };
 

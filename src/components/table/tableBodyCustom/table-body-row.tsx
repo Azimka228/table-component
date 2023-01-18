@@ -16,12 +16,17 @@ import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import TableCell from '@mui/material/TableCell';
+import {ColumnValuesType} from '../tableHeadCustom/table-head-cell';
 
 type TableBodyRowPropsType = {
   row: ProductType;
+  columns: Array<ColumnValuesType>
 };
 
-export const TableBodyRow: FC<TableBodyRowPropsType> = ({row}) => {
+export const TableBodyRow: FC<TableBodyRowPropsType> = ({row,columns}) => {
+  // console.log('row',row)
+  // console.log('columns',columns)
+
   const [open, setOpen] = React.useState(false);
 
   const collapseButtonIcons = open ? (
@@ -47,10 +52,9 @@ export const TableBodyRow: FC<TableBodyRowPropsType> = ({row}) => {
             </IconButton>
           </Tooltip>
         </StyledTableCell>
-        <StyledTableCell align="center">{row.title}</StyledTableCell>
-        <StyledTableCell align="center">{row.description}</StyledTableCell>
-        <StyledTableCell align="center">{row.price}</StyledTableCell>
-        <StyledTableCell align="center">{row.brand}</StyledTableCell>
+        {columns.map((el:ColumnValuesType) => {
+          return(<StyledTableCell key={el.field} align="center">{row[el['field'] as keyof ProductType]}</StyledTableCell>)
+        })}
       </StyledTableRow>
       <TableRow>
         <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
