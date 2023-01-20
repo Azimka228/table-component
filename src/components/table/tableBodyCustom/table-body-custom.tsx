@@ -35,6 +35,7 @@ export const TableBodyCustom: FC<TableBodyCustomPropsType> = ({
       {currentRows.length > 0 ?
         currentRows.map(row => (<TableBodyRow key={row.id} row={row} columns={columns} />))
         :
+        // temporary solution for displaying empty rows
         <div className={s.emptyRows}>Rows is empty</div>}
       {emptyRows > 0 && (
         <StyledTableRow style={{height: 53 * emptyRows}}>
