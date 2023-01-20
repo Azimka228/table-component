@@ -17,7 +17,7 @@ type TableHeadCellPropsType = {
 export type ColumnValuesType = {
   field: string;
   headerName: string;
-  type?: 'number' /* <--- Todo*/;
+  type?: 'number' | 'string' | 'Date'
   sortable?: boolean;
   width: number;
 };

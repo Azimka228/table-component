@@ -7,6 +7,8 @@ import {CircularProgress} from '@mui/material';
 import {ErrorSnackbar} from './components/errorSnackbar/error-snackbar';
 import {ColumnValuesType} from './components/table/tableHeadCustom/table-head-cell';
 
+
+
 function App() {
   const isInitialized = UseAppSelector(state => state.app.initialized);
   const productsData = UseAppSelector(state => state.products);
@@ -43,11 +45,13 @@ function App() {
     {
       field: 'brand',
       headerName: 'Brand',
-      type: 'number',
+      type: 'string',
       sortable: false,
       width: 30,
     },
   ];
+
+
 
   return (
     <div className={s.App}>
@@ -56,7 +60,7 @@ function App() {
         initialRows={productsData}
         columns={columns}
         rowsPerPageOptions={[3, 7, 10]}
-        searchBy={'price'}
+        searchBy={'title'}
       />
     </div>
   );

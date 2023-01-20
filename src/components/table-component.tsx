@@ -99,6 +99,7 @@ export const TableComponent: FC<TableComponentPropsType> = ({
       <TableToolbarCustom
         page={page}
         rows={rows}
+        columns={columns}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={rowsPerPageOptions}
         setPage={setPage}
