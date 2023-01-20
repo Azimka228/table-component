@@ -3,7 +3,7 @@
 ## About The Project
 
 In the project you can see dynamic table, that can be exported by csv. The application implements such features as filtering, search, sorting, pagination,supported collapsed row for view more information.
-The table supports the data requested from the server
+The table supports the data requested from the server.
 
 ### [Here you can look at the project](https://azimka228.github.io/table-component/)
 
