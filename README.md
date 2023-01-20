@@ -1,5 +1,10 @@
 # TABLE COMPONENT
 
+## How to install project
+
+### `npm i`
+### `npm start`
+
 ## About The Project
 
 In the project you can see dynamic table, that can be exported by csv. The application implements such features as filtering, search, sorting, pagination,supported collapsed row for view more information.

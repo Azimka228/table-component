@@ -35,6 +35,7 @@ export const TableHeadCell: FC<TableHeadCellPropsType> = ({
     if (order === 'asc') {
       requestSort(ColumnValues.field as keyof ProductType, 'desc');
     }
+    // it's for disabling sort in column
     if (order === 'desc') {
       requestSort(ColumnValues.field as keyof ProductType, 'none');
     }
@@ -42,6 +43,21 @@ export const TableHeadCell: FC<TableHeadCellPropsType> = ({
       requestSort(ColumnValues.field as keyof ProductType, 'asc');
     }
   };
+
+  const tableSortLabelStyles = {
+    '&.MuiTableSortLabel-root': {
+      color: 'white',
+    },
+    '&.MuiTableSortLabel-root:hover': {
+      color: 'white',
+    },
+    '&.Mui-active': {
+      color: 'white',
+    },
+    '& .MuiTableSortLabel-icon': {
+      color: 'white !important',
+    },
+  }
 
   return (
     <StyledTableCell
@@ -57,20 +73,7 @@ export const TableHeadCell: FC<TableHeadCellPropsType> = ({
           direction={
             orderBy === ColumnValues.field && order !== 'none' ? order : 'asc'
           }
-          sx={{
-            '&.MuiTableSortLabel-root': {
-              color: 'white',
-            },
-            '&.MuiTableSortLabel-root:hover': {
-              color: 'white',
-            },
-            '&.Mui-active': {
-              color: 'white',
-            },
-            '& .MuiTableSortLabel-icon': {
-              color: 'white !important',
-            },
-          }}
+          sx={tableSortLabelStyles}
         >
           {ColumnValues.headerName}
         </TableSortLabel>
