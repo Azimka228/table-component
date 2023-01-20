@@ -1,0 +1,11 @@
+.emptyRows {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    left: 45% ;
+    top:45%;
+    z-index: 100;
+    font-size: 3rem;
+}
