@@ -17,8 +17,8 @@ type TableHeadCellPropsType = {
 export type ColumnValuesType = {
   field: string;
   headerName: string;
-  type?: 'number' | 'string' | 'Date'
-  sortable?: boolean;
+  type?: 'number' | 'string' | 'Date';
+  sortable: boolean;
   width: number;
 };
 
@@ -29,6 +29,9 @@ export const TableHeadCell: FC<TableHeadCellPropsType> = ({
   order,
 }) => {
   const handleClick = () => {
+    if (!ColumnValues.sortable) {
+      return;
+    }
     if (order === 'asc') {
       requestSort(ColumnValues.field as keyof ProductType, 'desc');
     }
@@ -48,28 +51,31 @@ export const TableHeadCell: FC<TableHeadCellPropsType> = ({
       style={{width: ColumnValues.width}}
       sortDirection={'asc'}
     >
-      <TableSortLabel
-        active={orderBy === ColumnValues.field}
-        direction={
-          orderBy === ColumnValues.field && order !== 'none' ? order : 'asc'
-        }
-        sx={{
-          '&.MuiTableSortLabel-root': {
-            color: 'white',
-          },
-          '&.MuiTableSortLabel-root:hover': {
-            color: 'white',
-          },
-          '&.Mui-active': {
-            color: 'white',
-          },
-          '& .MuiTableSortLabel-icon': {
-            color: 'white !important',
-          },
-        }}
-      >
-        {ColumnValues.headerName}
-      </TableSortLabel>
+      {ColumnValues.sortable && (
+        <TableSortLabel
+          active={orderBy === ColumnValues.field}
+          direction={
+            orderBy === ColumnValues.field && order !== 'none' ? order : 'asc'
+          }
+          sx={{
+            '&.MuiTableSortLabel-root': {
+              color: 'white',
+            },
+            '&.MuiTableSortLabel-root:hover': {
+              color: 'white',
+            },
+            '&.Mui-active': {
+              color: 'white',
+            },
+            '& .MuiTableSortLabel-icon': {
+              color: 'white !important',
+            },
+          }}
+        >
+          {ColumnValues.headerName}
+        </TableSortLabel>
+      )}
+      {!ColumnValues.sortable && ColumnValues.headerName}
     </StyledTableCell>
   );
 };

@@ -10,14 +10,14 @@ type TableBodyCustomPropsType = {
   rowsPerPage: number;
   page: number;
   rows: Array<ProductType>;
-  columns: Array<ColumnValuesType>
+  columns: Array<ColumnValuesType>;
 };
 
 export const TableBodyCustom: FC<TableBodyCustomPropsType> = ({
   rowsPerPage,
   page,
   rows,
-  columns
+  columns,
 }) => {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -29,10 +29,7 @@ export const TableBodyCustom: FC<TableBodyCustomPropsType> = ({
         ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         : rows
       ).map(row => (
-        <TableBodyRow key={row.id}
-                      row={row}
-                      columns={columns}
-        />
+        <TableBodyRow key={row.id} row={row} columns={columns} />
       ))}
       {emptyRows > 0 && (
         <StyledTableRow style={{height: 53 * emptyRows}}>

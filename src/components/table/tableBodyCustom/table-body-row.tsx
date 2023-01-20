@@ -20,13 +20,10 @@ import {ColumnValuesType} from '../tableHeadCustom/table-head-cell';
 
 type TableBodyRowPropsType = {
   row: ProductType;
-  columns: Array<ColumnValuesType>
+  columns: Array<ColumnValuesType>;
 };
 
-export const TableBodyRow: FC<TableBodyRowPropsType> = ({row,columns}) => {
-  // console.log('row',row)
-  // console.log('columns',columns)
-
+export const TableBodyRow: FC<TableBodyRowPropsType> = ({row, columns}) => {
   const [open, setOpen] = React.useState(false);
 
   const collapseButtonIcons = open ? (
@@ -52,8 +49,12 @@ export const TableBodyRow: FC<TableBodyRowPropsType> = ({row,columns}) => {
             </IconButton>
           </Tooltip>
         </StyledTableCell>
-        {columns.map((el:ColumnValuesType) => {
-          return(<StyledTableCell key={el.field} align="center">{row[el['field'] as keyof ProductType]}</StyledTableCell>)
+        {columns.map((el: ColumnValuesType) => {
+          return (
+            <StyledTableCell key={el.field} align="center">
+              {row[el['field'] as keyof ProductType]}
+            </StyledTableCell>
+          );
         })}
       </StyledTableRow>
       <TableRow>

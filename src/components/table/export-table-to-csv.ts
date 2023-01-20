@@ -4,7 +4,11 @@ declare global {
   }
 }
 
-export const exportToCsv = (filename: string, rows: object[], headers?: string[]): void => {
+export const exportToCsv = (
+  filename: string,
+  rows: object[],
+  headers?: string[],
+): void => {
   if (!rows || !rows.length) {
     return;
   }
@@ -24,27 +28,33 @@ export const exportToCsv = (filename: string, rows: object[], headers?: string[]
     'sep=,\n' +
     columHearders.join(separator) +
     '\n' +
-    rows.map((row: any) => {
-      return keys.map((k: any) => {
-        let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+    rows
+      .map((row: any) => {
+        return keys
+          .map((k: any) => {
+            let cell = row[k] === null || row[k] === undefined ? '' : row[k];
 
-        cell = cell instanceof Date
-          ? cell.toLocaleString()
-          : cell.toString().replace(/"/g, '""');
+            cell =
+              cell instanceof Date
+                ? cell.toLocaleString()
+                : cell.toString().replace(/"/g, '""');
 
-        if (navigator.msSaveBlob) {
-          // eslint-disable-next-line no-control-regex
-          cell = cell.replace(/[^\x00-\x7F]/g, ''); // remove non-ascii characters
-        }
-        if (cell.search(/("|,|\n)/g) >= 0) {
-          cell = `"${cell}"`;
-        }
-        return cell;
-      }).join(separator);
-    }).join('\n');
+            if (navigator.msSaveBlob) {
+              // eslint-disable-next-line no-control-regex
+              cell = cell.replace(/[^\x00-\x7F]/g, ''); // remove non-ascii characters
+            }
+            if (cell.search(/("|,|\n)/g) >= 0) {
+              cell = `"${cell}"`;
+            }
+            return cell;
+          })
+          .join(separator);
+      })
+      .join('\n');
 
   const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
-  if (navigator.msSaveBlob) { // In case of IE 10+
+  if (navigator.msSaveBlob) {
+    // In case of IE 10+
     navigator.msSaveBlob(blob, filename);
   } else {
     const link = document.createElement('a');

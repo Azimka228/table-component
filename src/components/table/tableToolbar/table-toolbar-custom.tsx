@@ -14,19 +14,19 @@ type TableToolbarPropsType = {
   page: number;
   rowsPerPageOptions: Array<number>;
   rowsPerPage: number;
-  requestSearch: (searchedVal: string) => void
+  requestSearch: (searchedVal: string) => void;
 };
 
 export const TableToolbarCustom: FC<TableToolbarPropsType> = ({
-                                                                rows,
-                                                                columns,
-                                                                setPage,
-                                                                setRowsPerPage,
-                                                                page,
-                                                                rowsPerPageOptions,
-                                                                rowsPerPage,
-                                                                requestSearch,
-                                                              }) => {
+  rows,
+  columns,
+  setPage,
+  setRowsPerPage,
+  page,
+  rowsPerPageOptions,
+  rowsPerPage,
+  requestSearch,
+}) => {
   const TableToolbarStyle = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -35,7 +35,6 @@ export const TableToolbarCustom: FC<TableToolbarPropsType> = ({
   };
 
   const handleClickExportCSV = () => {
-
     const rowsToExport = rows.map((row: any) => {
       const newRows: any = {};
       columns.forEach((column: ColumnValuesType) => {
@@ -51,9 +50,7 @@ export const TableToolbarCustom: FC<TableToolbarPropsType> = ({
   };
 
   return (
-    <div
-      style={TableToolbarStyle}
-    >
+    <div style={TableToolbarStyle}>
       <Button onClick={handleClickExportCSV}>Export to csv</Button>
       <TablePaginationCustom
         rows={rows}

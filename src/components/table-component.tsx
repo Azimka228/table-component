@@ -37,7 +37,9 @@ export const TableComponent: FC<TableComponentPropsType> = ({
 
   const requestSearch = (searchedVal: string) => {
     const filteredRows = initialRows.filter((row: ProductType) => {
-        return String(row[searchBy]).toLowerCase().includes(searchedVal.toLowerCase());
+      return String(row[searchBy])
+        .toLowerCase()
+        .includes(searchedVal.toLowerCase());
     });
 
     // This is to keep sorting by column. if sorting is enabled on any of the columns
@@ -118,7 +120,8 @@ export const TableComponent: FC<TableComponentPropsType> = ({
             page={page}
             rows={rows}
             columns={columns}
-            rowsPerPage={rowsPerPage} />
+            rowsPerPage={rowsPerPage}
+          />
         </Table>
       </TableContainer>
     </>
