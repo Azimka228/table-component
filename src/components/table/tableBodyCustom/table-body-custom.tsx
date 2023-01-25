@@ -2,15 +2,15 @@ import React, {FC} from 'react';
 import TableBody from '@mui/material/TableBody';
 import {StyledTableRow} from '../../tableStyledComponents/styled-table-row';
 import {StyledTableCell} from '../../tableStyledComponents/styled-table-cell';
-import {ProductType} from '../../../api/api';
 import {TableBodyRow} from './table-body-row';
 import {ColumnValuesType} from '../tableHeadCustom/table-head-cell';
 import s from './table-body-custom.module.css'
+import {RowsType} from '../../table-component';
 
 type TableBodyCustomPropsType = {
   rowsPerPage: number;
   page: number;
-  rows: Array<ProductType>;
+  rows: Array<RowsType>;
   columns: Array<ColumnValuesType>;
 };
 
@@ -33,7 +33,7 @@ export const TableBodyCustom: FC<TableBodyCustomPropsType> = ({
   return (
     <TableBody>
       {currentRows.length > 0 ?
-        currentRows.map(row => (<TableBodyRow key={row.id} row={row} columns={columns} />))
+        currentRows.map(row => (<TableBodyRow key={row.id + ''} row={row} columns={columns} />))
         :
         // temporary solution for displaying empty rows
         <div className={s.emptyRows}>Rows is empty</div>}

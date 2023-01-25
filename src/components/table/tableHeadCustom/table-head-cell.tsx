@@ -1,13 +1,12 @@
 import React, {FC} from 'react';
 import {StyledTableCell} from '../../tableStyledComponents/styled-table-cell';
 import {TableSortLabel} from '@mui/material';
-import {OrderType} from '../../table-component';
-import {ProductType} from '../../../api/api';
+import {OrderType, RowsType} from '../../table-component';
 
 type TableHeadCellPropsType = {
   ColumnValues: ColumnValuesType;
   requestSort: (
-    newValueOrderBy: keyof ProductType,
+    newValueOrderBy: keyof RowsType,
     newValueOrder: OrderType,
   ) => void;
   orderBy: string;
@@ -33,14 +32,14 @@ export const TableHeadCell: FC<TableHeadCellPropsType> = ({
       return;
     }
     if (order === 'asc') {
-      requestSort(ColumnValues.field as keyof ProductType, 'desc');
+      requestSort(ColumnValues.field as keyof RowsType, 'desc');
     }
     // it's for disabling sort in column
     if (order === 'desc') {
-      requestSort(ColumnValues.field as keyof ProductType, 'none');
+      requestSort(ColumnValues.field as keyof RowsType, 'none');
     }
     if (order === 'none') {
-      requestSort(ColumnValues.field as keyof ProductType, 'asc');
+      requestSort(ColumnValues.field as keyof RowsType, 'asc');
     }
   };
 

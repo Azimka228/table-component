@@ -1,5 +1,4 @@
 import React, {FC} from 'react';
-import {ProductType} from '../../../api/api';
 import {StyledTableCell} from '../../tableStyledComponents/styled-table-cell';
 import {StyledTableRow} from '../../tableStyledComponents/styled-table-row';
 import {
@@ -17,9 +16,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import TableCell from '@mui/material/TableCell';
 import {ColumnValuesType} from '../tableHeadCustom/table-head-cell';
+import {RowsType} from '../../table-component';
 
 type TableBodyRowPropsType = {
-  row: ProductType;
+  row: RowsType;
   columns: Array<ColumnValuesType>;
 };
 
@@ -52,7 +52,7 @@ export const TableBodyRow: FC<TableBodyRowPropsType> = ({row, columns}) => {
         {columns.map((el: ColumnValuesType) => {
           return (
             <StyledTableCell key={el.field} align="center">
-              {row[el['field'] as keyof ProductType]}
+              {row[el['field'] as keyof RowsType]}
             </StyledTableCell>
           );
         })}
@@ -71,7 +71,7 @@ export const TableBodyRow: FC<TableBodyRowPropsType> = ({row, columns}) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.images.map(image => (
+                  { Array.isArray(row.images) && row.images.map(image => (
                     <TableRow key={image}>
                       <TableCell component="th" scope="row">
                         {image}

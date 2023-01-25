@@ -26,22 +26,22 @@ function App() {
 
   const columns: Array<ColumnValuesType> = [
     {
-      field: 'title',
-      headerName: 'Title',
+      field: 'email',
+      headerName: 'email',
       sortable: true,
-      width: 40,
+      width: 10,
     },
     {
-      field: 'description',
-      headerName: 'Description',
+      field: 'id',
+      headerName: 'id',
       sortable: true,
-      width: 140,
+      width: 10,
     },
     {
-      field: 'price',
-      headerName: 'Price',
-      sortable: true,
-      width: 30,
+      field: 'name',
+      headerName: 'name',
+      sortable: false,
+      width: 10,
     },
     {
       field: 'brand',
@@ -51,6 +51,7 @@ function App() {
       width: 30,
     },
   ];
+
 
   return (
     <div className={s.App}>

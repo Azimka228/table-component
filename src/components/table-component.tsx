@@ -3,21 +3,22 @@ import {FC} from 'react';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
-import {ProductType} from '../api/api';
 import {TableHeadCustom} from './table/tableHeadCustom/table-head-custom';
 import {TableBodyCustom} from './table/tableBodyCustom/table-body-custom';
 import {tableSort} from './table/table-sort';
 import {TableToolbarCustom} from './table/tableToolbar/table-toolbar-custom';
 import {ColumnValuesType} from './table/tableHeadCustom/table-head-cell';
 
+export type RowsType = Record<string, string | number | string[]>
+export type OrderType = 'asc' | 'desc' | 'none';
+
 type TableComponentPropsType = {
-  initialRows: Array<ProductType>;
+  initialRows: Array<RowsType>;
   columns: Array<ColumnValuesType>;
   rowsPerPageOptions: Array<number>;
-  searchBy: keyof ProductType;
+  searchBy: keyof RowsType;
 };
 
-export type OrderType = 'asc' | 'desc' | 'none';
 
 export const TableComponent: FC<TableComponentPropsType> = ({
   initialRows,
@@ -25,18 +26,20 @@ export const TableComponent: FC<TableComponentPropsType> = ({
   rowsPerPageOptions,
   searchBy,
 }) => {
-  const [rows, setRows] = React.useState<Array<ProductType>>(initialRows);
+
+  const defaultRowPerPage = rowsPerPageOptions.length > 0 ? rowsPerPageOptions[0] : 5
+  const [rows, setRows] = React.useState<Array<RowsType>>(initialRows);
 
   const [page, setPage] = React.useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(defaultRowPerPage);
 
   const [order, setOrder] = React.useState<OrderType>('none');
-  const [orderBy, setOrderBy] = React.useState<keyof ProductType | 'none'>(
+  const [orderBy, setOrderBy] = React.useState<keyof RowsType | 'none'>(
     'none',
   );
 
   const requestSearch = (searchedVal: string) => {
-    const filteredRows = initialRows.filter((row: ProductType) => {
+    const filteredRows = initialRows.filter((row: RowsType) => {
       return String(row[searchBy])
         .toLowerCase()
         .includes(searchedVal.toLowerCase());
@@ -45,7 +48,7 @@ export const TableComponent: FC<TableComponentPropsType> = ({
     // This is to keep sorting by column. if sorting is enabled on any of the columns
     const result =
       orderBy !== 'none' && order !== 'none'
-        ? tableSort<ProductType, keyof ProductType>(
+        ? tableSort<RowsType, keyof RowsType>(
             filteredRows,
             order,
             orderBy,
@@ -56,7 +59,7 @@ export const TableComponent: FC<TableComponentPropsType> = ({
     setPage(0);
   };
   const requestSort = (
-    newValueOrderBy: keyof ProductType,
+    newValueOrderBy: keyof RowsType,
     newValueOrder: OrderType,
   ) => {
     if (newValueOrderBy !== orderBy) {
@@ -73,7 +76,7 @@ export const TableComponent: FC<TableComponentPropsType> = ({
 
     if (newValueOrder !== 'none') {
       setRows(
-        tableSort<ProductType, keyof ProductType>(
+        tableSort<RowsType, keyof RowsType>(
           rows,
           newValueOrder,
           newValueOrderBy,
@@ -86,12 +89,12 @@ export const TableComponent: FC<TableComponentPropsType> = ({
     // this is for to sort the new clicked column by asc
     if (orderBy !== newValueOrder && order === 'desc') {
       setRows(
-        tableSort<ProductType, keyof ProductType>(rows, 'asc', newValueOrderBy),
+        tableSort<RowsType, keyof RowsType>(rows, 'asc', newValueOrderBy),
       );
     }
     if (newValueOrder === 'desc' && newValueOrderBy !== orderBy) {
       setRows(
-        tableSort<ProductType, keyof ProductType>(rows, 'asc', newValueOrderBy),
+        tableSort<RowsType, keyof RowsType>(rows, 'asc', newValueOrderBy),
       );
     }
   };

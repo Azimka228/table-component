@@ -1,13 +1,13 @@
 import React, {FC} from 'react';
 import {TablePaginationCustom} from './tablePagination/table-pagination-custom';
 import {TableSearchBar} from './tableSearchBar/table-search-bar';
-import {ProductType} from '../../../api/api';
 import {Button} from '@mui/material';
 import {ColumnValuesType} from '../tableHeadCustom/table-head-cell';
 import {exportToCsv} from '../export-table-to-csv';
+import {RowsType} from '../../table-component';
 
 type TableToolbarPropsType = {
-  rows: Array<ProductType>;
+  rows: Array<RowsType>;
   columns: Array<ColumnValuesType>;
   setPage: (e: number) => void;
   setRowsPerPage: (e: number) => void;
